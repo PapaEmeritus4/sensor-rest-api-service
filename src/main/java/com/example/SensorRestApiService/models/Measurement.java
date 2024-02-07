@@ -1,8 +1,9 @@
 package com.example.SensorRestApiService.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Measurement")
@@ -14,17 +15,22 @@ public class Measurement {
     private int id;
 
     @Column(name = "value")
-    @NotEmpty(message = "Value should not be empty")
-    @Size(min = -100, max = 100, message = "VALUE should be between -100 and 100")
+    @NotNull(message = "Value should not be empty")
+    @Min(-100)
+    @Max(100)
     private double value;
 
     @Column(name = "raining")
-    @NotEmpty(message = "Raining value should not be empty")
+    @NotNull(message = "Raining value should not be empty")
     private boolean raining;
 
     @ManyToOne
+    @NotNull(message = "Name of SENSOR should not be empty")
     @JoinColumn(name = "sensor", referencedColumnName = "name")
     private Sensor sensor;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public Measurement() {
     }
@@ -64,5 +70,13 @@ public class Measurement {
 
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
