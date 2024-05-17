@@ -6,6 +6,8 @@ import com.example.SensorRestApiService.entity.Sensor;
 import com.example.SensorRestApiService.service.SensorServiceImpl;
 import com.example.SensorRestApiService.util.exception.SensorNotFoundException;
 import com.example.SensorRestApiService.util.exception.SensorWithDuplicateNameException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,16 +16,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
+
 @RestController
 @RequestMapping("/api/v1/sensors")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
+@Tag(name = "Sensor controller V1", description = "Sensor API")
 public class SensorControllerV1 {
 
     private final SensorServiceImpl sensorService;
     private final ModelMapper modelMapper;
 
     @PostMapping()
-    public ResponseEntity<?> registrationSensor(@RequestBody @Valid SensorDto dto) {
+    @Operation(summary = "Sensor registration")
+    public ResponseEntity<?> sensorRegistration(@RequestBody @Valid SensorDto dto) {
         Sensor sensor = toEntity(dto);
         Sensor registratedSensor = sensorService.saveSensor(sensor);
         SensorDto result = fromEntity(registratedSensor);
@@ -36,7 +42,7 @@ public class SensorControllerV1 {
         if (e instanceof SensorNotFoundException) {
             status = HttpStatus.NOT_FOUND;
         } else if (e instanceof SensorWithDuplicateNameException) {
-            status = HttpStatus.CONFLICT;
+            status = CONFLICT;
         } else {
             status = HttpStatus.BAD_REQUEST;
         }

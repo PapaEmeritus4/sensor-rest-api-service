@@ -11,10 +11,4 @@ public class SensorRestApiServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SensorRestApiServiceApplication.class, args);
 	}
-
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
-
 }

@@ -5,6 +5,8 @@ import com.example.SensorRestApiService.dto.MeasurementDto;
 import com.example.SensorRestApiService.entity.Measurement;
 import com.example.SensorRestApiService.service.MeasurementServiceImpl;
 import com.example.SensorRestApiService.util.exception.SensorNotFoundException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,12 +22,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/measurements")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
+@Tag(name = "Measurement controller V1", description = "Measurement API")
 public class MeasurementControllerV1 {
 
     private final MeasurementServiceImpl measurementService;
     private final ModelMapper modelMapper;
 
     @GetMapping
+    @Operation(summary = "Get all measurements")
     public ResponseEntity<?> getMeasurements() {
         List<MeasurementDto> measurements = measurementService.getMeasurements()
                 .stream().map(this::fromEntity)
@@ -35,6 +39,7 @@ public class MeasurementControllerV1 {
     }
 
     @PostMapping()
+    @Operation(summary = "Add measurement")
     public ResponseEntity<?> addMeasurement(@RequestBody @Valid MeasurementDto dto) {
         Measurement measurement = toEntity(dto);
         Measurement addedMeasurement = measurementService.saveMeasurement(measurement);
@@ -43,6 +48,7 @@ public class MeasurementControllerV1 {
     }
 
     @GetMapping("/rainy-days-count")
+    @Operation(summary = "Get all rainy days count")
     public ResponseEntity<?> getRainyDaysCount() {
         Long rainyDaysCount = measurementService.getRainyDaysCount();
         return ResponseEntity.ok(rainyDaysCount);
