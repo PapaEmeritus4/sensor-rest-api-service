@@ -1,6 +1,6 @@
-package com.example.SensorRestApiService.repositories;
+package com.example.SensorRestApiService.repository;
 
-import com.example.SensorRestApiService.models.Measurement;
+import com.example.SensorRestApiService.entity.Measurement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

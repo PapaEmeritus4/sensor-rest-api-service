@@ -1,15 +1,18 @@
-package com.example.SensorRestApiService.models;
+package com.example.SensorRestApiService.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import java.util.List;
 
 @Entity
-@Table(name = "Sensor")
+@Table(name = "sensor")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Sensor {
 
     @Id
@@ -26,34 +29,7 @@ public class Sensor {
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Measurement> measurements;
 
-    public Sensor() {
-    }
-
     public Sensor(String name) {
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Measurement> getMeasurements() {
-        return measurements;
-    }
-
-    public void setMeasurements(List<Measurement> measurements) {
-        this.measurements = measurements;
     }
 }

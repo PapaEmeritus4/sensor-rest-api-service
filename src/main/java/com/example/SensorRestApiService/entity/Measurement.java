@@ -1,12 +1,18 @@
-package com.example.SensorRestApiService.models;
+package com.example.SensorRestApiService.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Measurement")
+@Table(name = "measurement")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Measurement {
 
     @Id
@@ -32,51 +38,8 @@ public class Measurement {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Measurement() {
-    }
-
     public Measurement(double value, boolean raining) {
         this.value = value;
         this.raining = raining;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    public boolean isRaining() {
-        return raining;
-    }
-
-    public void setRaining(boolean raining) {
-        this.raining = raining;
-    }
-
-    public Sensor getSensor() {
-        return sensor;
-    }
-
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
