@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="Volodymyr">
+        <sqlFile path="classpath:db/changelog/ddl/tables.sql" splitStatements="true" />
+    </changeSet>
+
+    <changeSet id="2" author="Volodymyr">
+        <sql>
+            alter table Measurement
+                add column updated_at timestamp;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

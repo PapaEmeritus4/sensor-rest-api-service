@@ -1,5 +1,5 @@
 spring:
-  # Data source
+# Data source
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/sensor_rest_app_db
@@ -10,6 +10,9 @@ spring:
     properties:
       hibernate:
         show_sql: true
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/master_changelog.xml
 # Swagger configuration
 springdoc:
   api-docs:
