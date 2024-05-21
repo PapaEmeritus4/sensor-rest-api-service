@@ -11,8 +11,10 @@ import java.util.List;
 @Entity
 @Table(name = "sensor")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Sensor {
 
     @Id
