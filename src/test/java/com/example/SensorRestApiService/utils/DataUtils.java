@@ -85,7 +85,7 @@ public class DataUtils {
         return Measurement.builder()
                 .id(1)
                 .value(25.0)
-                .raining(false)
+                .raining(true)
                 .sensor(getTemperatureSensorPersisted())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -95,7 +95,7 @@ public class DataUtils {
         return Measurement.builder()
                 .id(2)
                 .value(55.0)
-                .raining(false)
+                .raining(true)
                 .sensor(getHumiditySensorPersisted())
                 .updatedAt(LocalDateTime.now())
                 .build();
