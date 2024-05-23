@@ -1,5 +1,6 @@
 package com.example.SensorRestApiService.util.advice;
 
+import com.example.SensorRestApiService.dto.ErrorDto;
 import com.example.SensorRestApiService.util.exception.SensorNotFoundException;
 import com.example.SensorRestApiService.util.exception.SensorWithDuplicateNameException;
 import org.springframework.http.HttpStatus;
@@ -13,15 +14,15 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(SensorNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleSensorNotFoundException(SensorNotFoundException e) {
-        String response = e.getMessage();
+    public ResponseEntity<ErrorDto> handleSensorNotFoundException(SensorNotFoundException e) {
+        ErrorDto response = new ErrorDto(404, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SensorWithDuplicateNameException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<String> handleSensorWithDuplicateNameException(SensorWithDuplicateNameException e) {
-        String response = e.getMessage();
+    public ResponseEntity<ErrorDto> handleSensorWithDuplicateNameException(SensorWithDuplicateNameException e) {
+        ErrorDto response = new ErrorDto(409, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 }

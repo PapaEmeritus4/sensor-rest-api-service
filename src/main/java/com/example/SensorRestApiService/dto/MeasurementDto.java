@@ -1,18 +1,27 @@
 package com.example.SensorRestApiService.dto;
 
+import com.example.SensorRestApiService.entity.Measurement;
+import com.example.SensorRestApiService.entity.Sensor;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Schema(description = "Measurement DTO")
 public class MeasurementDto {
+
+    private Integer id;
 
     @Schema(description = "value", example = "24.5")
     @NotNull(message = "Value should not be empty")
@@ -26,5 +35,29 @@ public class MeasurementDto {
 
     @Schema(description = "sensor", example = "Sensor name")
     @NotNull(message = "Name of SENSOR should not be empty")
-    private SensorDto sensor;
+    private Sensor sensor;
+
+    @Schema(description = "updated_at", example = "2019-05-15")
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    public Measurement toEntity() {
+        return Measurement.builder()
+                .id(id)
+                .value(value)
+                .raining(raining)
+                .sensor(sensor)
+                .updatedAt(updatedAt)
+                .build();
+    }
+
+    public static MeasurementDto fromEntity(Measurement entity) {
+        return MeasurementDto.builder()
+                .id(entity.getId())
+                .value(entity.getValue())
+                .raining(entity.isRaining())
+                .sensor(entity.getSensor())
+                .updatedAt(entity.getUpdatedAt())
+                .build();
+    }
 }

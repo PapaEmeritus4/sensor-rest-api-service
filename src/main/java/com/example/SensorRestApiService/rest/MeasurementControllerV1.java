@@ -3,13 +3,13 @@ package com.example.SensorRestApiService.rest;
 import com.example.SensorRestApiService.dto.ErrorDto;
 import com.example.SensorRestApiService.dto.MeasurementDto;
 import com.example.SensorRestApiService.entity.Measurement;
+import com.example.SensorRestApiService.service.MeasurementService;
 import com.example.SensorRestApiService.service.MeasurementServiceImpl;
 import com.example.SensorRestApiService.util.exception.SensorNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -25,25 +25,23 @@ import java.util.stream.Collectors;
 @Tag(name = "Measurement controller V1", description = "Measurement API")
 public class MeasurementControllerV1 {
 
-    private final MeasurementServiceImpl measurementService;
-    private final ModelMapper modelMapper;
+    private final MeasurementService measurementService;
 
     @GetMapping
     @Operation(summary = "Get all measurements")
     public ResponseEntity<?> getMeasurements() {
-        List<MeasurementDto> measurements = measurementService.getMeasurements()
-                .stream().map(this::fromEntity)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(measurements);
+        List<Measurement> entities = measurementService.getMeasurements();
+        List<MeasurementDto> dtos = entities.stream()
+                .map(MeasurementDto::fromEntity).toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping()
     @Operation(summary = "Add measurement")
     public ResponseEntity<?> addMeasurement(@RequestBody @Valid MeasurementDto dto) {
-        Measurement measurement = toEntity(dto);
+        Measurement measurement = dto.toEntity();
         Measurement addedMeasurement = measurementService.saveMeasurement(measurement);
-        MeasurementDto result = fromEntity(addedMeasurement);
+        MeasurementDto result = MeasurementDto.fromEntity(addedMeasurement);
         return ResponseEntity.ok(result);
     }
 
@@ -68,13 +66,5 @@ public class MeasurementControllerV1 {
                 .message(e.getMessage())
                 .build();
         return new ResponseEntity<>(errorDto, status);
-    }
-
-    private Measurement toEntity(MeasurementDto dto) {
-        return modelMapper.map(dto, Measurement.class);
-    }
-
-    private MeasurementDto fromEntity(Measurement entity) {
-        return modelMapper.map(entity, MeasurementDto.class);
     }
 }

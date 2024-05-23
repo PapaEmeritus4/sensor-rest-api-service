@@ -3,6 +3,7 @@ package com.example.SensorRestApiService.rest;
 import com.example.SensorRestApiService.dto.ErrorDto;
 import com.example.SensorRestApiService.dto.SensorDto;
 import com.example.SensorRestApiService.entity.Sensor;
+import com.example.SensorRestApiService.service.SensorService;
 import com.example.SensorRestApiService.service.SensorServiceImpl;
 import com.example.SensorRestApiService.util.exception.SensorNotFoundException;
 import com.example.SensorRestApiService.util.exception.SensorWithDuplicateNameException;
@@ -10,7 +11,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,25 +24,22 @@ import static org.springframework.http.HttpStatus.CONFLICT;
 @Tag(name = "Sensor controller V1", description = "Sensor API")
 public class SensorControllerV1 {
 
-    private final SensorServiceImpl sensorService;
-    private final ModelMapper modelMapper;
+    private final SensorService sensorService;
 
     @PostMapping()
     @Operation(summary = "Sensor registration")
     public ResponseEntity<?> sensorRegistration(@RequestBody @Valid SensorDto dto) {
-        Sensor sensor = toEntity(dto);
+        Sensor sensor = dto.toEntity();
         Sensor registratedSensor = sensorService.saveSensor(sensor);
-        SensorDto result = fromEntity(registratedSensor);
+        SensorDto result = SensorDto.fromEntity(registratedSensor);
         return ResponseEntity.ok(result);
     }
 
-    @ExceptionHandler({SensorNotFoundException.class, SensorWithDuplicateNameException.class})
+    @ExceptionHandler(SensorWithDuplicateNameException.class)
     public ResponseEntity<ErrorDto> handleException(Exception e) {
         HttpStatus status;
-        if (e instanceof SensorNotFoundException) {
-            status = HttpStatus.NOT_FOUND;
-        } else if (e instanceof SensorWithDuplicateNameException) {
-            status = CONFLICT;
+         if (e instanceof SensorWithDuplicateNameException) {
+            status = HttpStatus.CONFLICT;
         } else {
             status = HttpStatus.BAD_REQUEST;
         }
@@ -52,13 +49,5 @@ public class SensorControllerV1 {
                 .message(e.getMessage())
                 .build();
         return new ResponseEntity<>(errorDto, status);
-    }
-
-    private Sensor toEntity(SensorDto dto) {
-        return modelMapper.map(dto, Sensor.class);
-    }
-
-    private SensorDto fromEntity(Sensor entity) {
-        return modelMapper.map(entity, SensorDto.class);
     }
 }
