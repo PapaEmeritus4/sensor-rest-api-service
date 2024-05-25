@@ -10,7 +10,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,10 +20,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(SensorControllerV1.class)
 public class SensorControllerV1Tests {
@@ -53,7 +50,9 @@ public class SensorControllerV1Tests {
         //then
         result
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.id", CoreMatchers.notNullValue()))
+                .andExpect(jsonPath("$.name", CoreMatchers.is(sensor.getName())));
     }
 
     @Test
@@ -71,7 +70,7 @@ public class SensorControllerV1Tests {
         result
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isConflict())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.status", CoreMatchers.is(409)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message", CoreMatchers.is("Sensor with this name already exists")));
+                .andExpect(jsonPath("$.status", CoreMatchers.is(409)))
+                .andExpect(jsonPath("$.message", CoreMatchers.is("Sensor with this name already exists")));
     }
 }

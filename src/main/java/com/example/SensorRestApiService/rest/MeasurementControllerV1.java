@@ -4,7 +4,6 @@ import com.example.SensorRestApiService.dto.ErrorDto;
 import com.example.SensorRestApiService.dto.MeasurementDto;
 import com.example.SensorRestApiService.entity.Measurement;
 import com.example.SensorRestApiService.service.MeasurementService;
-import com.example.SensorRestApiService.service.MeasurementServiceImpl;
 import com.example.SensorRestApiService.util.exception.SensorNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/measurements")

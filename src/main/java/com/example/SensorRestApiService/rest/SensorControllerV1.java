@@ -4,8 +4,6 @@ import com.example.SensorRestApiService.dto.ErrorDto;
 import com.example.SensorRestApiService.dto.SensorDto;
 import com.example.SensorRestApiService.entity.Sensor;
 import com.example.SensorRestApiService.service.SensorService;
-import com.example.SensorRestApiService.service.SensorServiceImpl;
-import com.example.SensorRestApiService.util.exception.SensorNotFoundException;
 import com.example.SensorRestApiService.util.exception.SensorWithDuplicateNameException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.http.HttpStatus.CONFLICT;
 
 @RestController
 @RequestMapping("/api/v1/sensors")
