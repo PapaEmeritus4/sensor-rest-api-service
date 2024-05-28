@@ -89,8 +89,10 @@ public class MeasurementServiceImplTests {
     public void givenMeasurementToSaveWithoutSensor_whenSaveMeasurement_thenExceptionIsThrown() {
         // given
         Measurement measurementToSave = DataUtils.getTemperatureMeasurementTransient();
+        Sensor sensor = DataUtils.getTemperatureSensorPersisted();
+        measurementToSave.setSensor(sensor);
         BDDMockito.given(sensorRepository.findByName(anyString()))
-                .willThrow(SensorNotFoundException.class);
+                .willReturn(null);
         // when
         assertThrows(
                 SensorNotFoundException.class, () -> serviceUnderTest.saveMeasurement(measurementToSave)

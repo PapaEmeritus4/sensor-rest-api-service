@@ -34,8 +34,7 @@ public class MeasurementDto {
     private boolean raining;
 
     @Schema(description = "sensor", example = "Sensor name")
-    @NotNull(message = "Name of SENSOR should not be empty")
-    private Sensor sensor;
+    private SensorDto sensor;
 
     @Schema(description = "updated_at", example = "2019-05-15")
     @Column(name = "updated_at")
@@ -46,7 +45,7 @@ public class MeasurementDto {
                 .id(id)
                 .value(value)
                 .raining(raining)
-                .sensor(sensor)
+                .sensor(sensor.toEntity())
                 .updatedAt(updatedAt)
                 .build();
     }
@@ -56,7 +55,7 @@ public class MeasurementDto {
                 .id(entity.getId())
                 .value(entity.getValue())
                 .raining(entity.isRaining())
-                .sensor(entity.getSensor())
+                .sensor(SensorDto.fromEntity(entity.getSensor()))
                 .updatedAt(entity.getUpdatedAt())
                 .build();
     }
