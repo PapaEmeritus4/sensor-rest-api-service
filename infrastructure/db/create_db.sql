@@ -1,0 +1,1 @@
+CREATE DATABASE sensor_rest_app_db;
