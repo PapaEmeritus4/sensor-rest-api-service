@@ -18,13 +18,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
+@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ItSensorControllerV1Tests {
+public class ItSensorControllerV1Tests  extends AbstractRestControllerBaseTest{
 
     @Autowired
     private MockMvc mockMvc;
