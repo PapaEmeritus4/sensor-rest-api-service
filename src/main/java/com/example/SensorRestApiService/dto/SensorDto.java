@@ -15,6 +15,7 @@ import lombok.*;
 @Schema(description = "Sensor DTO")
 public class SensorDto {
 
+    @Schema(description = "sensor_id", example = "1")
     private Integer id;
 
     @Schema(description = "name", example = "Sensor name")

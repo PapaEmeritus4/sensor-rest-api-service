@@ -24,7 +24,7 @@ public class SensorControllerV1 {
 
     @PostMapping()
     @Operation(summary = "Sensor registration")
-    public ResponseEntity<?> registerSensor(@RequestBody @Valid SensorDto dto) {
+    public ResponseEntity<SensorDto> registerSensor(@RequestBody @Valid SensorDto dto) {
         Sensor sensor = dto.toEntity();
         Sensor registratedSensor = sensorService.saveSensor(sensor);
         SensorDto result = SensorDto.fromEntity(registratedSensor);

@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfig {
 
+    /**
+     * Swagger configuration
+     * */
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()

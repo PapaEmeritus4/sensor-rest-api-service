@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ public class MeasurementControllerV1 {
 
     @GetMapping
     @Operation(summary = "Get all measurements")
-    public ResponseEntity<?> getMeasurements() {
+    public ResponseEntity<List<MeasurementDto>> getMeasurements() {
         List<Measurement> entities = measurementService.getMeasurements();
         List<MeasurementDto> dtos = entities.stream()
                 .map(MeasurementDto::fromEntity).toList();
@@ -36,7 +35,7 @@ public class MeasurementControllerV1 {
 
     @PostMapping()
     @Operation(summary = "Add measurement")
-    public ResponseEntity<?> addMeasurement(@RequestBody @Valid MeasurementDto dto) {
+    public ResponseEntity<MeasurementDto> addMeasurement(@RequestBody @Valid MeasurementDto dto) {
         Measurement measurement = dto.toEntity();
         Measurement addedMeasurement = measurementService.saveMeasurement(measurement);
         MeasurementDto result = MeasurementDto.fromEntity(addedMeasurement);
@@ -45,7 +44,7 @@ public class MeasurementControllerV1 {
 
     @GetMapping("/rainy-days-count")
     @Operation(summary = "Get all rainy days count")
-    public ResponseEntity<?> getRainyDaysCount() {
+    public ResponseEntity<Long> getRainyDaysCount() {
         Long rainyDaysCount = measurementService.getRainyDaysCount();
         return ResponseEntity.ok(rainyDaysCount);
     }

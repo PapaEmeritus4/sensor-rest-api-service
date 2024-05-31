@@ -1,7 +1,6 @@
 package com.example.SensorRestApiService.dto;
 
 import com.example.SensorRestApiService.entity.Measurement;
-import com.example.SensorRestApiService.entity.Sensor;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -21,6 +20,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Measurement DTO")
 public class MeasurementDto {
 
+    @Schema(description = "measurement_id", example = "1")
     private Integer id;
 
     @Schema(description = "value", example = "24.5")
