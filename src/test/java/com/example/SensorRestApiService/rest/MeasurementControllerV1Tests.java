@@ -1,10 +1,10 @@
 package com.example.SensorRestApiService.rest;
 
-import com.example.SensorRestApiService.dto.MeasurementDto;
 import com.example.SensorRestApiService.entity.Measurement;
 import com.example.SensorRestApiService.service.MeasurementService;
 import com.example.SensorRestApiService.util.exception.SensorNotFoundException;
 import com.example.SensorRestApiService.utils.DataUtils;
+import com.example.SensorRestApiService.utils.dto.MeasurementTestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
@@ -65,7 +65,7 @@ public class MeasurementControllerV1Tests {
     @DisplayName("Test save measurement functionality")
     public void givenMeasurementDto_whenSaveMeasurement_thenSuccessResponse() throws Exception {
         //given
-        MeasurementDto measurementDto = DataUtils.getTemperatureMeasurementDtoTransient();
+        MeasurementTestDto measurementDto = DataUtils.getTemperatureMeasurementDtoTransient();
         measurementDto.setSensor(DataUtils.getTemperatureSensorDtoPersisted());
         Measurement measurement = DataUtils.getTemperatureMeasurementPersisted();
         measurement.setSensor(DataUtils.getTemperatureSensorPersisted());
@@ -79,15 +79,14 @@ public class MeasurementControllerV1Tests {
         //then
         result
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$.id", CoreMatchers.notNullValue()));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     @DisplayName("Test save measurement without sensor functionality")
     public void givenMeasurementDtoWithoutSensor_whenSaveMeasurement_thenErrorResponse() throws Exception {
         //given
-        MeasurementDto measurementDto = DataUtils.getTemperatureMeasurementDtoTransient();
+        MeasurementTestDto measurementDto = DataUtils.getTemperatureMeasurementDtoTransient();
         measurementDto.setSensor(DataUtils.getTemperatureSensorDtoPersisted());
 
         BDDMockito.given(measurementService.saveMeasurement(any(Measurement.class)))

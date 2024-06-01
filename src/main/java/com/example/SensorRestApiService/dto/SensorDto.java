@@ -15,9 +15,6 @@ import lombok.*;
 @Schema(description = "Sensor DTO")
 public class SensorDto {
 
-    @Schema(description = "sensor_id", example = "1")
-    private Integer id;
-
     @Schema(description = "name", example = "Sensor name")
     @NotNull(message = "Name of SENSOR should not be empty")
     @Size(min = 3, max = 30, message = "Name of SENSOR should be between 2 and 30 characters")
@@ -25,14 +22,12 @@ public class SensorDto {
 
     public Sensor toEntity() {
         return Sensor.builder()
-                .id(id)
                 .name(name)
                 .build();
     }
 
     public static SensorDto fromEntity(Sensor sensor) {
         return SensorDto.builder()
-                .id(sensor.getId())
                 .name(sensor.getName())
                 .build();
     }

@@ -6,6 +6,11 @@ import com.example.SensorRestApiService.entity.Sensor;
 import com.example.SensorRestApiService.service.SensorService;
 import com.example.SensorRestApiService.util.exception.SensorWithDuplicateNameException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +29,19 @@ public class SensorControllerV1 {
 
     @PostMapping()
     @Operation(summary = "Sensor registration")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = SensorDto.class))),
+            @ApiResponse(responseCode = "409", description = "CONFLICT",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = "{\"code\": 409, \"message\": \"Sensor with this name already exists\"}"),
+                            schema = @Schema(implementation = ErrorDto.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = "{\"code\": 400, \"message\": \"Bad request\"}"),
+                            schema = @Schema(implementation = ErrorDto.class)))
+    })
     public ResponseEntity<SensorDto> registerSensor(@RequestBody @Valid SensorDto dto) {
         Sensor sensor = dto.toEntity();
         Sensor registratedSensor = sensorService.saveSensor(sensor);

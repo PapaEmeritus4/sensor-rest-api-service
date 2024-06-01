@@ -1,10 +1,10 @@
 package com.example.SensorRestApiService.rest;
 
-import com.example.SensorRestApiService.dto.SensorDto;
 import com.example.SensorRestApiService.entity.Sensor;
 import com.example.SensorRestApiService.service.SensorService;
 import com.example.SensorRestApiService.util.exception.SensorWithDuplicateNameException;
 import com.example.SensorRestApiService.utils.DataUtils;
+import com.example.SensorRestApiService.utils.dto.SensorTestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +39,7 @@ public class SensorControllerV1Tests {
     @DisplayName("Test create sensor functionality")
     public void givenSensorDto_whenCreateSensor_thenSuccessResponse() throws Exception {
         //given
-        SensorDto sensorDto = DataUtils.getTemperatureSensorDtoTransient();
+        SensorTestDto sensorDto = DataUtils.getTemperatureSensorDtoTransient();
         Sensor sensor = DataUtils.getTemperatureSensorPersisted();
         BDDMockito.given(sensorService.saveSensor(any(Sensor.class)))
                 .willReturn(sensor);
@@ -51,7 +51,6 @@ public class SensorControllerV1Tests {
         result
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$.id", CoreMatchers.notNullValue()))
                 .andExpect(jsonPath("$.name", CoreMatchers.is(sensor.getName())));
     }
 
@@ -59,7 +58,7 @@ public class SensorControllerV1Tests {
     @DisplayName("Test create sensor with duplicate name functionality")
     public void givenSensorDtoWithDuplicateName_whenCreateSensor_thenErrorResponse() throws Exception {
         //given
-        SensorDto sensorDto = DataUtils.getTemperatureSensorDtoPersisted();
+        SensorTestDto sensorDto = DataUtils.getTemperatureSensorDtoPersisted();
         BDDMockito.given(sensorService.saveSensor(any(Sensor.class)))
                 .willThrow(new SensorWithDuplicateNameException("Sensor with this name already exists"));
         //when

@@ -1,9 +1,9 @@
 package com.example.SensorRestApiService.utils;
 
-import com.example.SensorRestApiService.dto.MeasurementDto;
-import com.example.SensorRestApiService.dto.SensorDto;
 import com.example.SensorRestApiService.entity.Measurement;
 import com.example.SensorRestApiService.entity.Sensor;
+import com.example.SensorRestApiService.utils.dto.MeasurementTestDto;
+import com.example.SensorRestApiService.utils.dto.SensorTestDto;
 
 import java.time.LocalDateTime;
 
@@ -48,40 +48,40 @@ public class DataUtils {
                 .build();
     }
 
-    public static SensorDto getTemperatureSensorDtoTransient() {
-        return SensorDto.builder()
+    public static SensorTestDto getTemperatureSensorDtoTransient() {
+        return SensorTestDto.builder()
                 .name("Temperature Sensor")
                 .build();
     }
 
-    public static SensorDto getHumiditySensorDtoTransient() {
-        return SensorDto.builder()
+    public static SensorTestDto getHumiditySensorDtoTransient() {
+        return SensorTestDto.builder()
                 .name("Temperature Sensor")
                 .build();
     }
 
-    public static SensorDto getPressureSensorDtoTransient() {
-        return SensorDto.builder()
+    public static SensorTestDto getPressureSensorDtoTransient() {
+        return SensorTestDto.builder()
                 .name("Temperature Sensor")
                 .build();
     }
 
-    public static SensorDto getTemperatureSensorDtoPersisted() {
-        return SensorDto.builder()
+    public static SensorTestDto getTemperatureSensorDtoPersisted() {
+        return SensorTestDto.builder()
                 .id(1)
                 .name("Temperature Sensor")
                 .build();
     }
 
-    public static SensorDto getHumiditySensorDtoPersisted() {
-        return SensorDto.builder()
+    public static SensorTestDto getHumiditySensorDtoPersisted() {
+        return SensorTestDto.builder()
                 .id(2)
                 .name("Temperature Sensor")
                 .build();
     }
 
-    public static SensorDto getPressureSensorDtoPersisted() {
-        return SensorDto.builder()
+    public static SensorTestDto getPressureSensorDtoPersisted() {
+        return SensorTestDto.builder()
                 .id(3)
                 .name("Temperature Sensor")
                 .build();
@@ -138,45 +138,45 @@ public class DataUtils {
                 .build();
     }
 
-    public static MeasurementDto getTemperatureMeasurementDtoTransient() {
-        return MeasurementDto.builder()
+    public static MeasurementTestDto getTemperatureMeasurementDtoTransient() {
+        return MeasurementTestDto.builder()
                 .value(25.0)
                 .raining(false)
                 .build();
     }
 
-    public static MeasurementDto getHumidityMeasurementDtoTransient() {
-        return MeasurementDto.builder()
+    public static MeasurementTestDto getHumidityMeasurementDtoTransient() {
+        return MeasurementTestDto.builder()
                 .value(55.0)
                 .raining(false)
                 .build();
     }
 
-    public static MeasurementDto getPressureMeasurementDtoTransient() {
-        return MeasurementDto.builder()
+    public static MeasurementTestDto getPressureMeasurementDtoTransient() {
+        return MeasurementTestDto.builder()
                 .value(80.25)
                 .raining(false)
                 .build();
     }
 
-    public static MeasurementDto getTemperatureMeasurementDtoPersisted() {
-        return MeasurementDto.builder()
+    public static MeasurementTestDto getTemperatureMeasurementDtoPersisted() {
+        return MeasurementTestDto.builder()
                 .id(1)
                 .value(25.0)
                 .raining(false)
                 .build();
     }
 
-    public static MeasurementDto getHumidityMeasurementDtoPersisted() {
-        return MeasurementDto.builder()
+    public static MeasurementTestDto getHumidityMeasurementDtoPersisted() {
+        return MeasurementTestDto.builder()
                 .id(2)
                 .value(55.0)
                 .raining(false)
                 .build();
     }
 
-    public static MeasurementDto getPressureMeasurementDtoPersisted() {
-        return MeasurementDto.builder()
+    public static MeasurementTestDto getPressureMeasurementDtoPersisted() {
+        return MeasurementTestDto.builder()
                 .id(3)
                 .value(80.25)
                 .raining(false)

@@ -1,12 +1,12 @@
 package com.example.SensorRestApiService.it;
 
-import com.example.SensorRestApiService.dto.MeasurementDto;
-import com.example.SensorRestApiService.dto.SensorDto;
 import com.example.SensorRestApiService.entity.Measurement;
 import com.example.SensorRestApiService.entity.Sensor;
 import com.example.SensorRestApiService.repository.MeasurementRepository;
 import com.example.SensorRestApiService.repository.SensorRepository;
 import com.example.SensorRestApiService.utils.DataUtils;
+import com.example.SensorRestApiService.utils.dto.MeasurementTestDto;
+import com.example.SensorRestApiService.utils.dto.SensorTestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,8 +86,8 @@ public class ItMeasurementControllerV1Tests extends AbstractRestControllerBaseTe
         Sensor sensor = DataUtils.getTemperatureSensorTransient();
         sensorRepository.save(sensor);
 
-        SensorDto obtainedSensorDto = DataUtils.getTemperatureSensorDtoPersisted();
-        MeasurementDto measurementDto = DataUtils.getTemperatureMeasurementDtoTransient();
+        SensorTestDto obtainedSensorDto = DataUtils.getTemperatureSensorDtoPersisted();
+        MeasurementTestDto measurementDto = DataUtils.getTemperatureMeasurementDtoTransient();
         measurementDto.setSensor(obtainedSensorDto);
         //when
         ResultActions result = mockMvc.perform(post("/api/v1/measurements")
@@ -96,16 +96,15 @@ public class ItMeasurementControllerV1Tests extends AbstractRestControllerBaseTe
         //then
         result
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(jsonPath("$.id", CoreMatchers.notNullValue()));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
     @DisplayName("Test save measurement without sensor functionality")
     public void givenMeasurementDtoWithoutSensor_whenSaveMeasurement_thenErrorResponse() throws Exception {
         //given
-        SensorDto obtainedSensorDto = DataUtils.getTemperatureSensorDtoPersisted();
-        MeasurementDto measurementDto = DataUtils.getTemperatureMeasurementDtoTransient();
+        SensorTestDto obtainedSensorDto = DataUtils.getTemperatureSensorDtoPersisted();
+        MeasurementTestDto measurementDto = DataUtils.getTemperatureMeasurementDtoTransient();
         measurementDto.setSensor(obtainedSensorDto);
         //when
         ResultActions result = mockMvc.perform(post("/api/v1/measurements")

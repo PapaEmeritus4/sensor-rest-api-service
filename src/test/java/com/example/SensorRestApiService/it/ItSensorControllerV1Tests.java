@@ -1,9 +1,9 @@
 package com.example.SensorRestApiService.it;
 
-import com.example.SensorRestApiService.dto.SensorDto;
 import com.example.SensorRestApiService.entity.Sensor;
 import com.example.SensorRestApiService.repository.SensorRepository;
 import com.example.SensorRestApiService.utils.DataUtils;
+import com.example.SensorRestApiService.utils.dto.SensorTestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +46,7 @@ public class ItSensorControllerV1Tests  extends AbstractRestControllerBaseTest{
     @DisplayName("Test sensor registration functionality")
     public void givenSensorDto_whenRegisterSensor_thenSuccessResponse() throws Exception {
         //given
-        SensorDto sensorDto = DataUtils.getTemperatureSensorDtoTransient();
+        SensorTestDto sensorDto = DataUtils.getTemperatureSensorDtoTransient();
         //when
         ResultActions result = mockMvc.perform(post("/api/v1/sensors")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -55,7 +55,6 @@ public class ItSensorControllerV1Tests  extends AbstractRestControllerBaseTest{
         result
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.notNullValue()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(sensorDto.getName())));
 
     }
@@ -68,7 +67,7 @@ public class ItSensorControllerV1Tests  extends AbstractRestControllerBaseTest{
         Sensor sensor = DataUtils.getTemperatureSensorTransient();
         sensor.setName(duplicateName);
         sensorRepository.save(sensor);
-        SensorDto sensorDto = DataUtils.getTemperatureSensorDtoTransient();
+        SensorTestDto sensorDto = DataUtils.getTemperatureSensorDtoTransient();
         sensorDto.setName(duplicateName);
 
         //when
