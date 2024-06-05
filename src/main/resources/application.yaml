@@ -13,14 +13,19 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+# Liquibase
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/master_changelog.xml
     default-schema: public
+# Thymeleaf
+  thymeleaf:
+    check-template-location: false
 # Swagger configuration
 springdoc:
   api-docs:
     path: /api-docs
   override-with-generic-response: false
+# Server
 server:
   port: 8181
