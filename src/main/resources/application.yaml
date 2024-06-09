@@ -29,3 +29,9 @@ springdoc:
 # Server
 server:
   port: 8181
+# Monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["prometheus"]
