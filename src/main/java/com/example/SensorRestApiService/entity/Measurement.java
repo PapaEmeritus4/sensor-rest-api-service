@@ -20,16 +20,16 @@ public class Measurement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "value")
+    @Column(name = "value", nullable = false)
     private double value;
 
-    @Column(name = "raining")
+    @Column(name = "raining", nullable = false)
     private boolean raining;
 
     @ManyToOne
     @JoinColumn(name = "sensor", referencedColumnName = "name")
     private Sensor sensor;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false, unique = true)
     private LocalDateTime updatedAt;
 }

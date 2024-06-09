@@ -10,10 +10,10 @@ spring:
     properties:
       hibernate:
         show_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-# Liquibase
+    open-in-view: false
+  # Liquibase
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/master_changelog.xml

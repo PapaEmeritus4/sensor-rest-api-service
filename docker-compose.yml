@@ -3,13 +3,13 @@ version: '3.8'
 services:
 
   db:
-    image: postgres:14.7-alpine
+    image: timescale/timescaledb-ha:pg14-latest
     restart: on-failure
     env_file: ./.env
     environment:
-      - POSTGRES_USER=$POSTGRESDB_USER
-      - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
-      - POSTGRES_DB=$POSTGRESDB_DATABASE
+     POSTGRES_USER: $POSTGRESDB_USER
+     POSTGRES_PASSWORD: $POSTGRESDB_ROOT_PASSWORD
+     POSTGRES_DB: $POSTGRESDB_DATABASE
     ports:
       - 5432:5432
     volumes:

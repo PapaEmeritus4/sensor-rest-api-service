@@ -43,4 +43,14 @@
         <level value="debug" />
     </logger>
 
+    <!-- Logging for Liquibase auto-configuration -->
+    <logger name="org.springframework.boot.autoconfigure.liquibase">
+        <level value="debug" />
+    </logger>
+
+    <!-- Logging for Liquibase -->
+    <logger name="liquibase">
+        <level value="info" />
+    </logger>
+
 </configuration>

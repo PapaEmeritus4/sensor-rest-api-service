@@ -11,8 +11,13 @@
 
     <changeSet id="2" author="Volodymyr">
         <sql>
-            alter table Measurement
-                add column updated_at timestamp;
+            CREATE EXTENSION IF NOT EXISTS timescaledb;
+        </sql>
+    </changeSet>
+
+    <changeSet id="3" author="Volodymyr">
+        <sql>
+            SELECT create_hypertable('Measurement', 'updated_at');
         </sql>
     </changeSet>
 

@@ -1,1 +1,2 @@
 CREATE DATABASE sensor_rest_app_db;
+CREATE EXTENSION IF NOT EXISTS timescaledb;
