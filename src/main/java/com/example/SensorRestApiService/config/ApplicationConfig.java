@@ -1,7 +1,9 @@
 package com.example.SensorRestApiService.config;
 
+import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
@@ -34,5 +36,12 @@ public class ApplicationConfig {
         filter.setIncludeHeaders(false);
         filter.setAfterMessagePrefix("REQUEST DATA: ");
         return filter;
+    }
+
+    @Bean
+    public OtlpHttpSpanExporter otlpHttpSpanExporter(@Value("${tracing.url}") String url) {
+        return OtlpHttpSpanExporter.builder()
+                .setEndpoint(url)
+                .build();
     }
 }
